@@ -61,7 +61,9 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
+      "conflicts": [
+        "ServerFolders"
+      ],
       "tags": [
         "Appearance"
       ],
@@ -186,7 +188,8 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [
-        "BetterNsfwTag"
+        "BetterNsfwTag",
+        "BlurNSFW"
       ],
       "tags": [
         "Appearance"
@@ -351,7 +354,9 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
+      "conflicts": [
+        "ChatAliases"
+      ],
       "tags": [
         "Commands",
         "Utilities"
@@ -417,7 +422,9 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
+      "conflicts": [
+        "CompleteTimestamps"
+      ],
       "tags": [
         "Chat"
       ],
@@ -550,7 +557,9 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
+      "conflicts": [
+        "StaffTag"
+      ],
       "tags": [
         "Appearance"
       ],
@@ -903,7 +912,9 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
+      "conflicts": [
+        "RemoveBlockedUsers"
+      ],
       "tags": [
         "Privacy",
         "Messaging"
@@ -996,7 +1007,10 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
+      "conflicts": [
+        "HideIconBadge",
+        "UnreadCountBadges"
+      ],
       "tags": [
         "Notifications"
       ],
@@ -1022,7 +1036,9 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
+      "conflicts": [
+        "SuppressUserMentions"
+      ],
       "tags": [
         "Messaging"
       ],
@@ -1115,7 +1131,10 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
+      "conflicts": [
+        "OpenSteamLinksInApp",
+        "OpenLinksInDiscord"
+      ],
       "tags": [
         "Utilities"
       ],
@@ -1154,7 +1173,9 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
+      "conflicts": [
+        "PermissionsViewer"
+      ],
       "tags": [
         "Utilities"
       ],
@@ -1181,7 +1202,8 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [
-        "PersonalPins"
+        "PersonalPins",
+        "PinDMs"
       ],
       "tags": [
         "Utilities"
@@ -1235,7 +1257,9 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
+      "conflicts": [
+        "QuickMention"
+      ],
       "tags": [
         "Chat"
       ],
@@ -1292,7 +1316,9 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
+      "conflicts": [
+        "GoogleSearchReplace"
+      ],
       "tags": [
         "Privacy",
         "Utilities"
@@ -1347,7 +1373,9 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
+      "conflicts": [
+        "BetterRoleColors"
+      ],
       "tags": [
         "Appearance"
       ],
@@ -1528,7 +1556,9 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
+      "conflicts": [
+        "InvisibleTyping"
+      ],
       "tags": [
         "Privacy",
         "Chat"
@@ -1542,7 +1572,9 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
+      "conflicts": [
+        "SpotifyControls"
+      ],
       "tags": [
         "Activity"
       ],
@@ -1555,7 +1587,9 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
+      "conflicts": [
+        "SpotifyControls"
+      ],
       "tags": [
         "Activity",
         "Chat"
@@ -1582,7 +1616,9 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
+      "conflicts": [
+        "ChatFilter"
+      ],
       "tags": [
         "Chat",
         "Messaging"
@@ -2133,6 +2169,788 @@
       ],
       "compatibility": "full",
       "author": "DevilBro",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "BetterFormattingRedux",
+      "name": "BetterFormattingRedux",
+      "description": "Enhanced text formatting toolbar with buttons for bold, italic, code, spoiler, and more.",
+      "version": "2.3.15",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Chat",
+        "Formatting"
+      ],
+      "compatibility": "full",
+      "author": "Rauenzi",
+      "lastVerified": "2026-05-30"
+    },
+    {
+      "id": "BetterFriendList",
+      "name": "BetterFriendList",
+      "description": "Adds extra controls to the Friends page: sort by name/status, search, online counts, and extra tabs.",
+      "version": "1.7.1",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Social",
+        "Friends"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "BetterRoleColors",
+      "name": "BetterRoleColors",
+      "description": "Colors usernames, nicknames, and role text with their top role color throughout Discord.",
+      "version": "0.10.4",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "roleColorEverywhere"
+      ],
+      "tags": [
+        "Appearance",
+        "Roles"
+      ],
+      "compatibility": "full",
+      "author": "Rauenzi",
+      "lastVerified": "2026-05-30"
+    },
+    {
+      "id": "BlurNSFW",
+      "name": "BlurNSFW",
+      "description": "Blurs NSFW channel content until you choose to reveal it.",
+      "version": "1.0.5",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "blurNsfw",
+        "BetterNsfwTag"
+      ],
+      "tags": [
+        "Appearance",
+        "NSFW"
+      ],
+      "compatibility": "full",
+      "author": "Rauenzi",
+      "lastVerified": "2026-05-30"
+    },
+    {
+      "id": "ChatAliases",
+      "name": "ChatAliases",
+      "description": "Lets you define custom text aliases or commands that expand automatically when you type.",
+      "version": "2.5.1",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "customCommands"
+      ],
+      "tags": [
+        "Chat",
+        "Utility"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "ChatFilter",
+      "name": "ChatFilter",
+      "description": "Censors words or blocks complete messages and statuses matching your filter list.",
+      "version": "3.6.2",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "textReplace"
+      ],
+      "tags": [
+        "Chat",
+        "Privacy"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "ClickableMentions",
+      "name": "ClickableMentions",
+      "description": "Makes @mentions and #channel references clickable, jumping to the target.",
+      "version": "1.0.8",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Chat",
+        "Utility"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "CompleteTimestamps",
+      "name": "CompleteTimestamps",
+      "description": "Replaces Discord's relative timestamps with full custom-formatted timestamps.",
+      "version": "1.7.7",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "dontRoundMyTimestamps"
+      ],
+      "tags": [
+        "Appearance",
+        "Chat"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "Copier",
+      "name": "Copier",
+      "description": "Adds copy buttons throughout Discord for messages, IDs, links, and other text.",
+      "version": "1.6.3",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Utility",
+        "Chat"
+      ],
+      "compatibility": "full",
+      "author": "Strencher",
+      "lastVerified": "2026-05-30"
+    },
+    {
+      "id": "CustomQuoter",
+      "name": "CustomQuoter",
+      "description": "Brings back quote functionality and lets you set your own quote formats.",
+      "version": "1.4.1",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Chat",
+        "Utility"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "CustomStatusPresets",
+      "name": "CustomStatusPresets",
+      "description": "Save and quickly reuse custom status presets from a quick-select menu.",
+      "version": "1.3.6",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Utility",
+        "Status"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "DisplayServersAsChannels",
+      "name": "DisplayServersAsChannels",
+      "description": "Displays servers in the sidebar in a channel-list style layout.",
+      "version": "2.0.5",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Appearance",
+        "Servers"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "DoNotTrack",
+      "name": "DoNotTrack",
+      "description": "Blocks Discord's analytics and telemetry requests to protect your privacy.",
+      "version": "0.1.0",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Privacy",
+        "Utility"
+      ],
+      "compatibility": "full",
+      "author": "Rauenzi",
+      "lastVerified": "2026-05-30"
+    },
+    {
+      "id": "EditChannels",
+      "name": "EditChannels",
+      "description": "Locally rename and customize the appearance of channels.",
+      "version": "4.6.4",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Appearance",
+        "Channels"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "EditRoles",
+      "name": "EditRoles",
+      "description": "Locally edit role names, colors, and icons client-side.",
+      "version": "1.2.7",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Appearance",
+        "Roles"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "EditServers",
+      "name": "EditServers",
+      "description": "Locally rename servers and change their icon client-side.",
+      "version": "2.4.8",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Appearance",
+        "Servers"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "GoogleSearchReplace",
+      "name": "GoogleSearchReplace",
+      "description": "Replaces Discord's default Google text search with a custom search engine of your choice.",
+      "version": "1.4.1",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "replaceGoogleSearch"
+      ],
+      "tags": [
+        "Utility",
+        "Search"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "HideDisabledEmojis",
+      "name": "HideDisabledEmojis",
+      "description": "Hides emojis you don't have access to from the emoji picker.",
+      "version": "0.1.0",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Appearance",
+        "Emojis"
+      ],
+      "compatibility": "full",
+      "author": "Rauenzi",
+      "lastVerified": "2026-05-30"
+    },
+    {
+      "id": "HideIconBadge",
+      "name": "HideIconBadge",
+      "description": "Hides the red notification badge on the Discord taskbar/dock icon.",
+      "version": "0.0.6",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "noPendingCount"
+      ],
+      "tags": [
+        "Appearance",
+        "Notifications"
+      ],
+      "compatibility": "full",
+      "author": "Rauenzi",
+      "lastVerified": "2026-05-30"
+    },
+    {
+      "id": "HideMutedCategories",
+      "name": "HideMutedCategories",
+      "description": "Hides muted categories from the channel list when muted channels are hidden.",
+      "version": "1.1.4",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Appearance",
+        "Channels"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "InvisibleTyping",
+      "name": "InvisibleTyping",
+      "description": "Stops the typing indicator from appearing when you type, keeping your typing invisible.",
+      "version": "1.5.0",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "silentTyping"
+      ],
+      "tags": [
+        "Privacy",
+        "Chat"
+      ],
+      "compatibility": "full",
+      "author": "Strencher",
+      "lastVerified": "2026-05-30"
+    },
+    {
+      "id": "LastMessageDate",
+      "name": "LastMessageDate",
+      "description": "Shows the last message date of a member in their user popout and profile.",
+      "version": "1.5.7",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Users",
+        "Utility"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "OldTitleBar",
+      "name": "OldTitleBar",
+      "description": "Restores Discord's old title bar style.",
+      "version": "1.9.4",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Appearance"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "OpenSteamLinksInApp",
+      "name": "OpenSteamLinksInApp",
+      "description": "Opens Steam links in the Steam client instead of the browser.",
+      "version": "1.1.8",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "openInApp"
+      ],
+      "tags": [
+        "Utility",
+        "Links"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "PermissionsViewer",
+      "name": "PermissionsViewer",
+      "description": "Shows detailed channel and role permission info in the UI.",
+      "version": "1.0.0",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "permissionsViewer"
+      ],
+      "tags": [
+        "Utility",
+        "Servers"
+      ],
+      "compatibility": "full",
+      "author": "Rauenzi",
+      "lastVerified": "2026-05-30"
+    },
+    {
+      "id": "PinDMs",
+      "name": "PinDMs",
+      "description": "Pin DMs so they always appear at the top of your DM list.",
+      "version": "2.0.7",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "pinDMs"
+      ],
+      "tags": [
+        "Utility",
+        "DMs"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "QuickMention",
+      "name": "QuickMention",
+      "description": "Adds a Mention button to the message context menu for quick @mentions.",
+      "version": "1.0.9",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "quickMention"
+      ],
+      "tags": [
+        "Chat",
+        "Utility"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "RemoveBlockedUsers",
+      "name": "RemoveBlockedUsers",
+      "description": "Removes blocked and ignored users' messages from the chat entirely.",
+      "version": "1.8.1",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "noBlockedMessages"
+      ],
+      "tags": [
+        "Privacy",
+        "Chat"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "RemoveNicknames",
+      "name": "RemoveNicknames",
+      "description": "Shows account usernames instead of server nicknames throughout Discord.",
+      "version": "1.4.5",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Appearance",
+        "Users"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "RevealAllSpoilers",
+      "name": "RevealAllSpoilers",
+      "description": "Click a spoiler to reveal it, or Ctrl+click to reveal all spoilers in a message.",
+      "version": "1.1.2",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Chat",
+        "Utility"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "RoleMembers",
+      "name": "RoleMembers",
+      "description": "Adds a member list to role entries in the server member list.",
+      "version": "0.2.1",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Utility",
+        "Roles"
+      ],
+      "compatibility": "full",
+      "author": "Rauenzi",
+      "lastVerified": "2026-05-30"
+    },
+    {
+      "id": "ServerFolders",
+      "name": "ServerFolders",
+      "description": "Enhances Discord's server folders: servers open in a new container, with better folder organization tools.",
+      "version": "7.4.9",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "betterFolders"
+      ],
+      "tags": [
+        "Appearance",
+        "Servers"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "ServerHider",
+      "name": "ServerHider",
+      "description": "Hide specific servers from your server list without leaving them.",
+      "version": "6.3.4",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Utility",
+        "Servers"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "ShowBadgesInChat",
+      "name": "ShowBadgesInChat",
+      "description": "Displays Nitro, HypeSquad, and other badges next to usernames in chat and member list.",
+      "version": "2.1.5",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Appearance",
+        "Users"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "SplitLargeMessages",
+      "name": "SplitLargeMessages",
+      "description": "Automatically splits messages that exceed Discord's character limit into multiple sends.",
+      "version": "1.8.7",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Chat",
+        "Utility"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "SpotifyControls",
+      "name": "SpotifyControls",
+      "description": "Adds a Spotify control panel to Discord while listening on a connected account.",
+      "version": "1.5.3",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "spotifyCrack",
+        "spotifyShareSongLink"
+      ],
+      "tags": [
+        "Music",
+        "Utility"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "StaffTag",
+      "name": "StaffTag",
+      "description": "Adds a crown or staff tag to server owners, admins, and management roles.",
+      "version": "1.7.4",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "forceOwnerCrown"
+      ],
+      "tags": [
+        "Appearance",
+        "Servers"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "TimedLightDarkMode",
+      "name": "TimedLightDarkMode",
+      "description": "Automatically switches between light and dark mode on a time schedule.",
+      "version": "1.2.2",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Appearance",
+        "Utility"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "TopRoleEverywhere",
+      "name": "TopRoleEverywhere",
+      "description": "Shows each user's highest role as a tag throughout Discord.",
+      "version": "3.2.4",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Appearance",
+        "Roles"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "UserNotes",
+      "name": "UserNotes",
+      "description": "Write private local notes about any user, visible only to you.",
+      "version": "1.1.2",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Users",
+        "Utility"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "WriteUpperCase",
+      "name": "WriteUpperCase",
+      "description": "Automatically capitalizes the first letter of each sentence in message inputs.",
+      "version": "1.4.6",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Chat",
+        "Utility"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "lastVerified": "2026-05-30",
       "requires": [
         "BDFDB"
       ]
