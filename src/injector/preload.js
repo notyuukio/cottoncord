@@ -3,9 +3,25 @@
 const path = require('path');
 const Module = require('module');
 
-// Register .jsx as plain JavaScript so require() handles UI files correctly
+// Register .jsx: transform JSX → React.createElement via esbuild.transformSync
+// so UI files can use real JSX syntax without a separate build step.
+// Falls back to plain-JS evaluation if esbuild is unavailable.
 if (!Module._extensions['.jsx']) {
-  Module._extensions['.jsx'] = Module._extensions['.js'];
+  let _esbuild = null;
+  const _fs = require('fs');
+  Module._extensions['.jsx'] = function(mod, filename) {
+    let source = _fs.readFileSync(filename, 'utf8');
+    try {
+      if (!_esbuild) _esbuild = require('esbuild');
+      source = _esbuild.transformSync(source, {
+        loader:      'jsx',
+        jsxFactory:  'React.createElement',
+        jsxFragment: 'React.Fragment',
+        target:      'es2020',
+      }).code;
+    } catch (_) { /* fall through — evaluate as plain JS */ }
+    mod._compile(source, filename);
+  };
 }
 
 const ROOT = path.join(__dirname, '..');
