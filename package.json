@@ -1,0 +1,22 @@
+{
+  "name": "cottoncord",
+  "version": "1.0.0",
+  "description": "A Discord client mod supporting both BetterDiscord and Vencord plugins",
+  "main": "src/injector/index.js",
+  "scripts": {
+    "build": "node build.js",
+    "start": "electron .",
+    "install-discord": "node scripts/install.js"
+  },
+  "dependencies": {
+    "esbuild": "^0.20.0",
+    "electron": "^29.0.0",
+    "socks-proxy-agent": "^8.0.3"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0"
+  },
+  "author": "notyuukio",
+  "license": "MIT"
+}

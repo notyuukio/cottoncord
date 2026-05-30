@@ -1,0 +1,10 @@
+node_modules/
+dist/
+*.log
+.env
+cottoncord-config.json
+.DS_Store
+*.exe
+*.dmg
+*.AppImage
+release/
