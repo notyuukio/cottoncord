@@ -34,7 +34,10 @@ const pluginRegistry = tryLoad('pluginRegistry', path.join(ROOT, 'updater',    '
 const webpackCount = moduleStore?.getModuleCount?.()   ?? 0;
 const bdCount      = bdLoader?.getLoadedCount?.()      ?? 0;
 const vcCount      = vencordLoader?.getLoadedCount?.() ?? 0;
-const vpnStatus    = vpnManager?.getStatus?.()         ?? 'Disabled';
+const vpnStatusObj = vpnManager?.getStatus?.();
+const vpnStatus    = vpnStatusObj
+  ? (vpnStatusObj.connected ? `Connected (${vpnStatusObj.provider})` : 'Disabled')
+  : 'Disabled';
 
 // ── Startup log ────────────────────────────────────────────────────────────
 console.log('%c✅ CottonCord loaded',              'color:#7289da;font-weight:bold;font-size:13px');
