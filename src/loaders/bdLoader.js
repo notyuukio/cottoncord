@@ -207,7 +207,10 @@ function loadAllPlugins() {
       return;
     }
 
-    const files = fs.readdirSync(PLUGINS_DIR).filter(f => f.endsWith('.js'));
+    // Sort so 0BDFDB.plugin.js loads before all dependent plugins
+    const files = fs.readdirSync(PLUGINS_DIR)
+      .filter(f => f.endsWith('.js'))
+      .sort();
 
     if (files.length === 0) {
       console.log('[CottonCord] No BD plugins found.');

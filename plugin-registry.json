@@ -9,7 +9,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance", "Fun"],
+      "tags": [
+        "Appearance",
+        "Fun"
+      ],
       "compatibility": "full"
     },
     {
@@ -20,7 +23,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance"],
+      "tags": [
+        "Appearance"
+      ],
       "compatibility": "full"
     },
     {
@@ -31,7 +36,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utility"],
+      "tags": [
+        "Utility"
+      ],
       "compatibility": "full"
     },
     {
@@ -42,7 +49,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Privacy"],
+      "tags": [
+        "Privacy"
+      ],
       "compatibility": "full"
     },
     {
@@ -53,7 +62,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance"],
+      "tags": [
+        "Appearance"
+      ],
       "compatibility": "full"
     },
     {
@@ -64,7 +75,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Accessibility", "Appearance"],
+      "tags": [
+        "Accessibility",
+        "Appearance"
+      ],
       "compatibility": "full"
     },
     {
@@ -75,7 +89,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance"],
+      "tags": [
+        "Appearance"
+      ],
       "compatibility": "full"
     },
     {
@@ -86,7 +102,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Context Menu", "Utilities"],
+      "tags": [
+        "Context Menu",
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -97,7 +116,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance", "Accessibility"],
+      "tags": [
+        "Appearance",
+        "Accessibility"
+      ],
       "compatibility": "full"
     },
     {
@@ -108,7 +130,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Privacy", "Utilities"],
+      "tags": [
+        "Privacy",
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -119,7 +144,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance", "Utilities"],
+      "tags": [
+        "Appearance",
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -130,7 +158,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat", "Utilities"],
+      "tags": [
+        "Chat",
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -141,7 +172,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance", "Voice"],
+      "tags": [
+        "Appearance",
+        "Voice"
+      ],
       "compatibility": "full"
     },
     {
@@ -151,8 +185,12 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
-      "tags": ["Appearance"],
+      "conflicts": [
+        "BetterNsfwTag"
+      ],
+      "tags": [
+        "Appearance"
+      ],
       "compatibility": "full"
     },
     {
@@ -163,7 +201,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Voice", "Utilities"],
+      "tags": [
+        "Voice",
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -173,8 +214,12 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
-      "tags": ["Chat"],
+      "conflicts": [
+        "CharCounter"
+      ],
+      "tags": [
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -185,7 +230,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Privacy", "Utilities"],
+      "tags": [
+        "Privacy",
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -196,7 +244,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance"],
+      "tags": [
+        "Appearance"
+      ],
       "compatibility": "full"
     },
     {
@@ -207,7 +257,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance", "Accessibility"],
+      "tags": [
+        "Appearance",
+        "Accessibility"
+      ],
       "compatibility": "full"
     },
     {
@@ -218,7 +271,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -229,7 +284,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -240,7 +297,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat", "Utilities"],
+      "tags": [
+        "Chat",
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -251,7 +311,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat", "Utilities"],
+      "tags": [
+        "Chat",
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -262,7 +325,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat", "Utilities"],
+      "tags": [
+        "Chat",
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -273,7 +339,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -284,7 +352,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Commands", "Utilities"],
+      "tags": [
+        "Commands",
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -295,7 +366,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -306,7 +379,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Activity"],
+      "tags": [
+        "Activity"
+      ],
       "compatibility": "full"
     },
     {
@@ -317,7 +392,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -328,7 +405,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Voice"],
+      "tags": [
+        "Voice"
+      ],
       "compatibility": "full"
     },
     {
@@ -339,7 +418,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat"],
+      "tags": [
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -350,7 +431,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -361,7 +444,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -372,7 +457,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -383,7 +470,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Fun", "Chat"],
+      "tags": [
+        "Fun",
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -394,7 +484,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance"],
+      "tags": [
+        "Appearance"
+      ],
       "compatibility": "full"
     },
     {
@@ -405,7 +497,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat"],
+      "tags": [
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -416,7 +510,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat"],
+      "tags": [
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -427,7 +523,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance", "Chat"],
+      "tags": [
+        "Appearance",
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -438,7 +537,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance", "Chat"],
+      "tags": [
+        "Appearance",
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -449,7 +551,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance"],
+      "tags": [
+        "Appearance"
+      ],
       "compatibility": "full"
     },
     {
@@ -460,7 +564,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -471,7 +577,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -482,7 +590,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -492,8 +602,12 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
-      "tags": ["Activity"],
+      "conflicts": [
+        "GameActivityToggle"
+      ],
+      "tags": [
+        "Activity"
+      ],
       "compatibility": "full"
     },
     {
@@ -504,7 +618,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat"],
+      "tags": [
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -515,7 +631,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat"],
+      "tags": [
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -526,7 +644,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Messaging"],
+      "tags": [
+        "Messaging"
+      ],
       "compatibility": "full"
     },
     {
@@ -537,7 +657,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Activity"],
+      "tags": [
+        "Activity"
+      ],
       "compatibility": "full"
     },
     {
@@ -548,7 +670,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance", "Chat"],
+      "tags": [
+        "Appearance",
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -559,7 +684,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -569,8 +696,13 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
-      "tags": ["Appearance", "Chat"],
+      "conflicts": [
+        "ImageUtilities"
+      ],
+      "tags": [
+        "Appearance",
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -581,7 +713,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -592,7 +726,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance", "Chat"],
+      "tags": [
+        "Appearance",
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -603,7 +740,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -614,7 +753,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Activity"],
+      "tags": [
+        "Activity"
+      ],
       "compatibility": "full"
     },
     {
@@ -625,7 +766,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance", "Fun"],
+      "tags": [
+        "Appearance",
+        "Fun"
+      ],
       "compatibility": "full"
     },
     {
@@ -635,8 +779,12 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
-      "tags": ["Utilities"],
+      "conflicts": [
+        "ServerCounter"
+      ],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -647,7 +795,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance", "Chat"],
+      "tags": [
+        "Appearance",
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -658,7 +809,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat", "Messaging"],
+      "tags": [
+        "Chat",
+        "Messaging"
+      ],
       "compatibility": "full"
     },
     {
@@ -669,7 +823,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat", "Utilities"],
+      "tags": [
+        "Chat",
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -680,7 +837,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat"],
+      "tags": [
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -691,7 +850,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Messaging", "Privacy"],
+      "tags": [
+        "Messaging",
+        "Privacy"
+      ],
       "compatibility": "full"
     },
     {
@@ -702,7 +864,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat"],
+      "tags": [
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -713,7 +877,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -724,7 +890,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Notifications", "Utilities"],
+      "tags": [
+        "Notifications",
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -735,7 +904,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Privacy", "Messaging"],
+      "tags": [
+        "Privacy",
+        "Messaging"
+      ],
       "compatibility": "full"
     },
     {
@@ -746,7 +918,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -757,7 +931,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -768,7 +944,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat"],
+      "tags": [
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -779,7 +957,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -790,7 +970,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance", "Chat"],
+      "tags": [
+        "Appearance",
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -801,7 +984,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -812,7 +997,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Notifications"],
+      "tags": [
+        "Notifications"
+      ],
       "compatibility": "full"
     },
     {
@@ -823,7 +1010,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance"],
+      "tags": [
+        "Appearance"
+      ],
       "compatibility": "full"
     },
     {
@@ -834,7 +1023,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Messaging"],
+      "tags": [
+        "Messaging"
+      ],
       "compatibility": "full"
     },
     {
@@ -845,7 +1036,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat"],
+      "tags": [
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -856,7 +1049,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance"],
+      "tags": [
+        "Appearance"
+      ],
       "compatibility": "full"
     },
     {
@@ -867,7 +1062,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Messaging"],
+      "tags": [
+        "Messaging"
+      ],
       "compatibility": "full"
     },
     {
@@ -877,8 +1074,12 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
-      "tags": ["Notifications"],
+      "conflicts": [
+        "NotificationSounds"
+      ],
+      "tags": [
+        "Notifications"
+      ],
       "compatibility": "full"
     },
     {
@@ -889,7 +1090,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Fun"],
+      "tags": [
+        "Fun"
+      ],
       "compatibility": "full"
     },
     {
@@ -900,7 +1103,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Notifications"],
+      "tags": [
+        "Notifications"
+      ],
       "compatibility": "full"
     },
     {
@@ -911,7 +1116,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -922,7 +1129,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -933,7 +1142,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -944,7 +1155,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -955,7 +1168,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Voice"],
+      "tags": [
+        "Voice"
+      ],
       "compatibility": "full"
     },
     {
@@ -965,8 +1180,12 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
-      "tags": ["Utilities"],
+      "conflicts": [
+        "PersonalPins"
+      ],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -977,7 +1196,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance"],
+      "tags": [
+        "Appearance"
+      ],
       "compatibility": "full"
     },
     {
@@ -988,7 +1209,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance"],
+      "tags": [
+        "Appearance"
+      ],
       "compatibility": "full"
     },
     {
@@ -999,7 +1222,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat", "Messaging"],
+      "tags": [
+        "Chat",
+        "Messaging"
+      ],
       "compatibility": "full"
     },
     {
@@ -1010,7 +1236,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat"],
+      "tags": [
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -1021,7 +1249,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -1031,8 +1261,13 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
-      "tags": ["Notifications", "Utilities"],
+      "conflicts": [
+        "ReadAllNotificationsButton"
+      ],
+      "tags": [
+        "Notifications",
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -1042,8 +1277,12 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
-      "tags": ["Notifications"],
+      "conflicts": [
+        "FriendNotifications"
+      ],
+      "tags": [
+        "Notifications"
+      ],
       "compatibility": "full"
     },
     {
@@ -1054,7 +1293,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Privacy", "Utilities"],
+      "tags": [
+        "Privacy",
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -1065,7 +1307,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat", "Messaging"],
+      "tags": [
+        "Chat",
+        "Messaging"
+      ],
       "compatibility": "full"
     },
     {
@@ -1076,7 +1321,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Context Menu", "Utilities"],
+      "tags": [
+        "Context Menu",
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -1087,7 +1335,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -1098,7 +1348,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance"],
+      "tags": [
+        "Appearance"
+      ],
       "compatibility": "full"
     },
     {
@@ -1109,7 +1361,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat", "Messaging"],
+      "tags": [
+        "Chat",
+        "Messaging"
+      ],
       "compatibility": "full"
     },
     {
@@ -1120,7 +1375,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Fun"],
+      "tags": [
+        "Fun"
+      ],
       "compatibility": "full"
     },
     {
@@ -1131,7 +1388,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat", "Commands"],
+      "tags": [
+        "Chat",
+        "Commands"
+      ],
       "compatibility": "full"
     },
     {
@@ -1141,8 +1401,13 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
-      "tags": ["Utilities", "Context Menu"],
+      "conflicts": [
+        "ServerDetails"
+      ],
+      "tags": [
+        "Utilities",
+        "Context Menu"
+      ],
       "compatibility": "full"
     },
     {
@@ -1153,7 +1418,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Notifications", "Appearance"],
+      "tags": [
+        "Notifications",
+        "Appearance"
+      ],
       "compatibility": "full"
     },
     {
@@ -1164,7 +1432,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance", "Chat"],
+      "tags": [
+        "Appearance",
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -1175,7 +1446,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance", "Chat"],
+      "tags": [
+        "Appearance",
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -1185,8 +1459,12 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
-      "tags": ["Utilities"],
+      "conflicts": [
+        "ShowConnections"
+      ],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -1197,7 +1475,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -1208,7 +1488,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance", "Chat"],
+      "tags": [
+        "Appearance",
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -1219,7 +1502,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -1230,7 +1515,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat", "Messaging"],
+      "tags": [
+        "Chat",
+        "Messaging"
+      ],
       "compatibility": "full"
     },
     {
@@ -1241,7 +1529,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Privacy", "Chat"],
+      "tags": [
+        "Privacy",
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -1252,7 +1543,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Activity"],
+      "tags": [
+        "Activity"
+      ],
       "compatibility": "full"
     },
     {
@@ -1263,7 +1556,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Activity", "Chat"],
+      "tags": [
+        "Activity",
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -1274,7 +1570,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -1285,7 +1583,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat", "Messaging"],
+      "tags": [
+        "Chat",
+        "Messaging"
+      ],
       "compatibility": "full"
     },
     {
@@ -1296,7 +1597,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Appearance"],
+      "tags": [
+        "Appearance"
+      ],
       "compatibility": "full"
     },
     {
@@ -1307,7 +1610,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Activity"],
+      "tags": [
+        "Activity"
+      ],
       "compatibility": "full"
     },
     {
@@ -1317,8 +1622,13 @@
       "version": "1.0.0",
       "source": "vencord",
       "broken": false,
-      "conflicts": [],
-      "tags": ["Chat", "Utilities"],
+      "conflicts": [
+        "Translator"
+      ],
+      "tags": [
+        "Chat",
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -1329,7 +1639,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat", "Notifications"],
+      "tags": [
+        "Chat",
+        "Notifications"
+      ],
       "compatibility": "full"
     },
     {
@@ -1340,7 +1653,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat", "Appearance"],
+      "tags": [
+        "Chat",
+        "Appearance"
+      ],
       "compatibility": "full"
     },
     {
@@ -1351,7 +1667,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat"],
+      "tags": [
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -1362,7 +1680,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat"],
+      "tags": [
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -1373,7 +1693,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities", "Voice"],
+      "tags": [
+        "Utilities",
+        "Voice"
+      ],
       "compatibility": "full"
     },
     {
@@ -1384,7 +1707,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Voice", "Notifications"],
+      "tags": [
+        "Voice",
+        "Notifications"
+      ],
       "compatibility": "full"
     },
     {
@@ -1395,7 +1721,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities", "Context Menu"],
+      "tags": [
+        "Utilities",
+        "Context Menu"
+      ],
       "compatibility": "full"
     },
     {
@@ -1406,7 +1735,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat", "Utilities"],
+      "tags": [
+        "Chat",
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -1417,7 +1749,9 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Voice"],
+      "tags": [
+        "Voice"
+      ],
       "compatibility": "full"
     },
     {
@@ -1428,7 +1762,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Voice", "Utilities"],
+      "tags": [
+        "Voice",
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -1439,7 +1776,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Voice", "Chat"],
+      "tags": [
+        "Voice",
+        "Chat"
+      ],
       "compatibility": "full"
     },
     {
@@ -1450,7 +1790,10 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Chat", "Utilities"],
+      "tags": [
+        "Chat",
+        "Utilities"
+      ],
       "compatibility": "full"
     },
     {
@@ -1461,8 +1804,338 @@
       "source": "vencord",
       "broken": false,
       "conflicts": [],
-      "tags": ["Utilities"],
+      "tags": [
+        "Utilities"
+      ],
       "compatibility": "full"
+    },
+    {
+      "id": "BDFDB",
+      "name": "BDFDB Library",
+      "description": "Core library required by most DevilBro BetterDiscord plugins. Provides shared utilities, webpack module access, and UI components.",
+      "version": "4.5.2",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Library",
+        "Utility"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "isLibrary": true
+    },
+    {
+      "id": "SpellCheck",
+      "name": "SpellCheck",
+      "description": "Adds spell check to all message inputs. Select a word and right-click to add it to your dictionary.",
+      "version": "1.7.3",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Chat",
+        "Utility"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "CharCounter",
+      "name": "CharCounter",
+      "description": "Adds a character counter to most text inputs in Discord.",
+      "version": "1.7.1",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "characterCounter"
+      ],
+      "tags": [
+        "Chat",
+        "Utility"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "ImageUtilities",
+      "name": "ImageUtilities",
+      "description": "Adds gallery view, download, reverse image search, zoom, and copy utilities for images and videos.",
+      "version": "5.6.6",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "imageZoom"
+      ],
+      "tags": [
+        "Media",
+        "Utility"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "Translator",
+      "name": "Translator",
+      "description": "Translate incoming and outgoing messages within Discord using Google, Microsoft, DeepL, or DeepSeek.",
+      "version": "2.8.2",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "translate"
+      ],
+      "tags": [
+        "Chat",
+        "Utility"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "EditUsers",
+      "name": "EditUsers",
+      "description": "Allows you to locally edit any user's name, color, tag, and avatar.",
+      "version": "5.1.1",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Appearance",
+        "Users"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "ReadAllNotificationsButton",
+      "name": "ReadAllNotificationsButton",
+      "description": "Adds a button to mark all notifications as read at once.",
+      "version": "1.8.5",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "readAllNotificationsButton"
+      ],
+      "tags": [
+        "Utility",
+        "Notifications"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "BetterNsfwTag",
+      "name": "BetterNsfwTag",
+      "description": "Improves the NSFW channel tag with additional configuration options.",
+      "version": "1.3.3",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "blurNsfw"
+      ],
+      "tags": [
+        "Appearance",
+        "NSFW"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "FriendNotifications",
+      "name": "FriendNotifications",
+      "description": "Shows toast notifications when friends come online, go offline, or change status.",
+      "version": "2.1.6",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "relationshipNotifier"
+      ],
+      "tags": [
+        "Notifications",
+        "Friends"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "PersonalPins",
+      "name": "PersonalPins",
+      "description": "Pin any message to a personal list only visible to you \u2014 not the channel pin list.",
+      "version": "2.3.5",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "pinDMs"
+      ],
+      "tags": [
+        "Chat",
+        "Utility"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "BetterSearchPage",
+      "name": "BetterSearchPage",
+      "description": "Improves the Discord search page with better filtering and layout options.",
+      "version": "1.3.1",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Utility",
+        "Search"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "ServerCounter",
+      "name": "ServerCounter",
+      "description": "Adds a server member and online count display to the server header.",
+      "version": "1.1.1",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "memberCount"
+      ],
+      "tags": [
+        "Utility",
+        "Servers"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "MessageUtilities",
+      "name": "MessageUtilities",
+      "description": "Adds extra utilities to messages: copy text, copy ID, unsend messages, and more.",
+      "version": "2.0.1",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [],
+      "tags": [
+        "Chat",
+        "Utility"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "ShowConnections",
+      "name": "ShowConnections",
+      "description": "Shows connected accounts (Twitch, Twitter, Steam, etc.) on user popouts and profiles.",
+      "version": "1.3.3",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "showConnections"
+      ],
+      "tags": [
+        "Users",
+        "Utility"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "GameActivityToggle",
+      "name": "GameActivityToggle",
+      "description": "Adds a quick-toggle button in the activity area to enable/disable game activity display.",
+      "version": "1.4.0",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "gameActivityToggle"
+      ],
+      "tags": [
+        "Utility",
+        "Activity"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "NotificationSounds",
+      "name": "NotificationSounds",
+      "description": "Replace or customize Discord notification sounds with your own audio files.",
+      "version": "4.0.8",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "notificationVolume"
+      ],
+      "tags": [
+        "Utility",
+        "Notifications"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "requires": [
+        "BDFDB"
+      ]
+    },
+    {
+      "id": "ServerDetails",
+      "name": "ServerDetails",
+      "description": "Shows detailed server information including creation date, member counts, region, and boost level.",
+      "version": "1.3.6",
+      "source": "betterdiscord",
+      "broken": false,
+      "conflicts": [
+        "serverInfo"
+      ],
+      "tags": [
+        "Utility",
+        "Servers"
+      ],
+      "compatibility": "full",
+      "author": "DevilBro",
+      "requires": [
+        "BDFDB"
+      ]
     }
   ]
 }
