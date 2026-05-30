@@ -76,6 +76,27 @@ function poll(predicate, intervalMs = 100, maxAttempts = 300) {
     console.error('[CottonCord] ❌ vpnManager:', err.message);
   }
 
+  // 3a ── definePlugin shim (must be before any Vencord plugin loads)
+  try {
+    require(path.join(ROOT, 'core', 'definePlugin.js'));
+  } catch (err) {
+    console.error('[CottonCord] ❌ definePlugin:', err.message);
+  }
+
+  // 3b ── Vencord API layer (Commands, MessageEvents, Settings)
+  try {
+    require(path.join(ROOT, 'core', 'vencordApi.js'));
+  } catch (err) {
+    console.error('[CottonCord] ❌ vencordApi:', err.message);
+  }
+
+  // 3c ── Webpack shims (@webpack / @webpack/common)
+  try {
+    require(path.join(ROOT, 'core', 'webpackShims.js'));
+  } catch (err) {
+    console.error('[CottonCord] ❌ webpackShims:', err.message);
+  }
+
   // 4 ── BD plugin loader
   try {
     require(path.join(ROOT, 'loaders', 'bdLoader.js'));
