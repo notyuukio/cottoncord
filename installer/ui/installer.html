@@ -2,10 +2,205 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; style-src 'unsafe-inline'; script-src 'self' 'unsafe-inline';" />
   <title>CottonCord Installer</title>
-  <!-- Implemented in Prompt 10 -->
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #313338;
+      color: #dbdee1;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      user-select: none;
+      -webkit-app-region: drag;
+    }
+
+    /* Logo */
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+    .logo-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #5865f2, #eb459e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .app-name {
+      font-size: 24px;
+      font-weight: 700;
+      color: #f2f3f5;
+      letter-spacing: -0.3px;
+    }
+
+    /* Discord version pill */
+    .version-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: #949ba4;
+    }
+    .version-label { color: #b5bac1; }
+    #discord-version {
+      background: #2b2d31;
+      border: 1px solid #3d3f45;
+      border-radius: 12px;
+      padding: 2px 10px;
+      font-size: 12px;
+      color: #dbdee1;
+    }
+    #installed-badge {
+      display: none;
+      background: #1a3a2a;
+      border: 1px solid #23a55a;
+      border-radius: 12px;
+      padding: 2px 10px;
+      font-size: 12px;
+      color: #23a55a;
+    }
+    #installed-badge.show { display: inline-block; }
+
+    /* Buttons */
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+      -webkit-app-region: no-drag;
+    }
+    button {
+      padding: 9px 22px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s, filter 0.15s;
+      -webkit-app-region: no-drag;
+    }
+    button:disabled { opacity: 0.45; cursor: not-allowed; }
+    button:not(:disabled):hover { filter: brightness(1.1); }
+    button:not(:disabled):active { filter: brightness(0.9); }
+
+    #btn-install   { background: #23a55a; color: #fff; }
+    #btn-reinstall { background: #5865f2; color: #fff; }
+    #btn-uninstall { background: #ed4245; color: #fff; }
+
+    /* Status message */
+    #status {
+      min-height: 34px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #b5bac1;
+      transition: color 0.2s;
+    }
+    #status.ok  { color: #23a55a; }
+    #status.err { color: #ed4245; }
+  </style>
 </head>
 <body>
-  <p>CottonCord Installer — coming in Prompt 10</p>
+
+  <div class="logo-row">
+    <div class="logo-circle">🧶</div>
+    <span class="app-name">CottonCord</span>
+  </div>
+
+  <div class="version-row">
+    <span class="version-label">Discord</span>
+    <span id="discord-version">Detecting…</span>
+    <span id="installed-badge">Installed</span>
+  </div>
+
+  <div class="btn-row">
+    <button id="btn-install"   disabled>Install</button>
+    <button id="btn-reinstall" disabled>Reinstall</button>
+    <button id="btn-uninstall" disabled>Uninstall</button>
+  </div>
+
+  <div id="status">Detecting Discord installation…</div>
+
+  <script>
+    const btnInstall   = document.getElementById('btn-install');
+    const btnReinstall = document.getElementById('btn-reinstall');
+    const btnUninstall = document.getElementById('btn-uninstall');
+    const statusEl     = document.getElementById('status');
+    const versionEl    = document.getElementById('discord-version');
+    const badgeEl      = document.getElementById('installed-badge');
+
+    let discordFound = false;
+
+    function setStatus(msg, type) {
+      statusEl.textContent = msg;
+      statusEl.className = type || '';
+    }
+
+    function setButtons(enabled) {
+      btnInstall.disabled   = !enabled || !discordFound;
+      btnReinstall.disabled = !enabled || !discordFound;
+      btnUninstall.disabled = !enabled || !discordFound;
+    }
+
+    async function init() {
+      try {
+        const info = await window.installer.getInfo();
+        discordFound = !!info.resourcesPath;
+
+        if (discordFound) {
+          versionEl.textContent = info.version;
+          if (info.installed) badgeEl.classList.add('show');
+          setStatus('Ready. Choose an action below.');
+        } else {
+          versionEl.textContent = 'Not found';
+          setStatus('Discord installation not found. Is Discord installed?', 'err');
+        }
+      } catch (err) {
+        setStatus('Detection error: ' + err.message, 'err');
+      }
+      setButtons(true);
+    }
+
+    async function run(action, label) {
+      setButtons(false);
+      setStatus(label + '…');
+      try {
+        const result = await window.installer[action]();
+        if (result.ok) {
+          setStatus(result.msg, 'ok');
+          // Re-query installed state
+          const info = await window.installer.getInfo();
+          info.installed ? badgeEl.classList.add('show') : badgeEl.classList.remove('show');
+        } else {
+          setStatus(result.msg, 'err');
+        }
+      } catch (err) {
+        setStatus(action + ' error: ' + err.message, 'err');
+      }
+      setButtons(true);
+    }
+
+    btnInstall.addEventListener('click',   () => run('install',   'Installing'));
+    btnReinstall.addEventListener('click', () => run('reinstall', 'Reinstalling'));
+    btnUninstall.addEventListener('click', () => run('uninstall', 'Uninstalling'));
+
+    init();
+  </script>
 </body>
 </html>

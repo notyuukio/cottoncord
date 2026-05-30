@@ -1,0 +1,62 @@
+{
+  "name": "cottoncord-installer",
+  "version": "1.0.0",
+  "description": "CottonCord standalone installer",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start":     "electron .",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux"
+  },
+  "dependencies": {
+    "electron": "^29.0.0"
+  },
+  "devDependencies": {
+    "electron-builder": "^24.0.0"
+  },
+  "build": {
+    "appId": "com.cottoncord.installer",
+    "productName": "CottonCord Installer",
+    "copyright": "Copyright © 2024 notyuukio",
+    "files": [
+      "main.js",
+      "preload.js",
+      "ui/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "../src",
+        "to":   "src",
+        "filter": ["**/*"]
+      }
+    ],
+    "win": {
+      "target": [{ "target": "nsis", "arch": ["x64"] }],
+      "icon": "ui/icon.ico"
+    },
+    "nsis": {
+      "oneClick":           true,
+      "allowToChangeInstallationDirectory": false,
+      "createDesktopShortcut": true,
+      "runAfterFinish":    true
+    },
+    "mac": {
+      "target": [{ "target": "dmg", "arch": ["x64", "arm64"] }],
+      "category": "public.app-category.utilities",
+      "icon": "ui/icon.icns"
+    },
+    "dmg": {
+      "title": "CottonCord Installer"
+    },
+    "linux": {
+      "target": [{ "target": "AppImage", "arch": ["x64"] }],
+      "category": "Utility",
+      "icon": "ui/icon.png"
+    },
+    "directories": {
+      "output": "dist"
+    }
+  }
+}
