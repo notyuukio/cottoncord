@@ -59,24 +59,24 @@ Module._load = function(request, parent, isMain) {
   return patchedElectron;
 };
 
-// ── VPN IPC handlers (main process only) ──────────────────────────────────
-//
-// session.defaultSession is a main-process-only API, so vpnManager.js (which
-// runs in the preload/renderer) communicates here via ipcMain/ipcRenderer.
-// Handlers are registered before Discord's asar loads so they're ready for
-// the first IPC call that comes in from the preload.
+// ── VPN / kill-switch helpers ──────────────────────────────────────────────
 
-const { ipcMain, app, session } = require('electron');
+const { ipcMain, app, session, dialog } = require('electron');
 
-// Holds proxy credentials in memory so the 'login' event can answer
-// Electron's SOCKS5 auth challenge without a round-trip to the renderer.
-let _vpnCreds = null;
+let _vpnCreds       = null;
+let killSwitchArmed = false;   // true = block all Discord requests
+
+// Discord URL patterns for webRequest filtering.
+// Covers all hostnames protected by the technical rules.
+const DISCORD_URL_PATTERNS = [
+  '*://discord.com/*',
+  '*://*.discord.com/*',
+  '*://discordapp.com/*',
+  '*://*.discordapp.com/*',
+  '*://gateway.discord.gg/*',
+];
 
 function buildDiscordPacScript(host, port) {
-  // PAC script routes only Discord hostnames through the SOCKS5 proxy.
-  // All other traffic returns DIRECT. ${host} and ${port} below are our
-  // JS template-literal substitutions; the `host` parameter inside the
-  // PAC function body is the PAC runtime's own variable — not a conflict.
   const proxy = `SOCKS5 ${host}:${port}`;
   return `function FindProxyForURL(url, host) {
   if (dnsDomainIs(host, ".discord.com")   ||
@@ -90,6 +90,64 @@ function buildDiscordPacScript(host, port) {
 }`;
 }
 
+// Read only the vpn.enabled flag from the persisted config.
+// Duplicates the path logic from vpnManager so the main process is self-contained.
+function savedVpnEnabled() {
+  try {
+    let base;
+    if (process.platform === 'win32') {
+      base = process.env.APPDATA
+        || path.join(process.env.USERPROFILE || '', 'AppData', 'Roaming');
+    } else if (process.platform === 'darwin') {
+      base = path.join(process.env.HOME || '', 'Library', 'Application Support');
+    } else {
+      base = process.env.XDG_CONFIG_HOME
+        || path.join(process.env.HOME || '', '.config');
+    }
+    const raw = fs.readFileSync(
+      path.join(base, 'CottonCord', 'cottoncord-config.json'), 'utf8'
+    );
+    return JSON.parse(raw)?.vpn?.enabled === true;
+  } catch (_) {
+    return false;
+  }
+}
+
+// ── Kill switch ────────────────────────────────────────────────────────────
+//
+// Installed once in app.whenReady(). A single webRequest listener is registered
+// for all Discord URL patterns. Whether it cancels the request is controlled
+// by the killSwitchArmed flag, which starts true when VPN was enabled in the
+// last session and is only set false after setProxy succeeds.
+//
+// Using a flag rather than re-registering the listener avoids the "last
+// listener wins" behaviour of onBeforeRequest — we never need to re-install.
+
+app.whenReady().then(() => {
+  if (savedVpnEnabled()) {
+    killSwitchArmed = true;
+    console.log('[CottonCord] Kill switch: ARMED — Discord traffic blocked until proxy confirmed');
+
+    session.defaultSession.webRequest.onBeforeRequest(
+      { urls: DISCORD_URL_PATTERNS },
+      (details, callback) => {
+        // Dynamically read the flag — no listener re-registration needed
+        callback({ cancel: killSwitchArmed });
+      }
+    );
+  }
+
+  // Answer SOCKS5 authentication challenges raised by Electron's network stack
+  app.on('login', (event, _webContents, _request, authInfo, callback) => {
+    if (authInfo.isProxy && _vpnCreds?.username) {
+      event.preventDefault();
+      callback(_vpnCreds.username, _vpnCreds.password ?? '');
+    }
+  });
+});
+
+// ── VPN IPC handlers ───────────────────────────────────────────────────────
+
 ipcMain.handle('cc:vpn:setProxy', async (_event, config) => {
   try {
     _vpnCreds = config;
@@ -97,8 +155,16 @@ ipcMain.handle('cc:vpn:setProxy', async (_event, config) => {
     await session.defaultSession.setProxy({
       pacScript: buildDiscordPacScript(config.host, config.port),
     });
+
+    // setProxy resolved → proxy is active. Disarm the kill switch.
+    // JS is single-threaded in the main process; no request can slip
+    // through between setProxy completing and the flag being cleared.
+    killSwitchArmed = false;
+    console.log('[CottonCord] Kill switch: disarmed — proxy active');
     return { ok: true };
   } catch (err) {
+    // Kill switch stays armed. Return the error so vpnManager can surface it.
+    console.error('[CottonCord] Kill switch: proxy setup failed — traffic remains blocked');
     return { ok: false, error: err.message };
   }
 });
@@ -107,23 +173,21 @@ ipcMain.handle('cc:vpn:clearProxy', async () => {
   try {
     _vpnCreds = null;
     await app.whenReady();
-    // Empty object resets to system default (no proxy)
     await session.defaultSession.setProxy({});
+    // Intentional user disconnect — kill switch is NOT re-armed here.
+    // It only arms on startup when the saved config says enabled:true.
     return { ok: true };
   } catch (err) {
     return { ok: false, error: err.message };
   }
 });
 
-// Answer SOCKS5 authentication challenges on behalf of the renderer.
-// This fires when the SOCKS5 server requires a username/password.
-app.whenReady().then(() => {
-  app.on('login', (event, _webContents, _request, authInfo, callback) => {
-    if (authInfo.isProxy && _vpnCreds?.username) {
-      event.preventDefault();
-      callback(_vpnCreds.username, _vpnCreds.password ?? '');
-    }
-  });
+// Show a native blocking error dialog — used by vpnManager when the proxy
+// fails while the kill switch is armed. Native dialog works regardless of
+// Discord's page state since it doesn't touch the renderer DOM at all.
+ipcMain.handle('cc:vpn:showError', async (_event, title, message) => {
+  await app.whenReady();
+  dialog.showErrorBox(title, message);
 });
 
 // ── Load Discord ───────────────────────────────────────────────────────────

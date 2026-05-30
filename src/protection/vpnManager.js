@@ -99,7 +99,24 @@ async function connect() {
 
   // Ask the main process to set the PAC-based session proxy
   const result = await ipcRenderer.invoke('cc:vpn:setProxy', state.config);
-  if (!result.ok) throw new Error(result.error ?? 'setProxy failed');
+
+  if (!result.ok) {
+    // Kill switch is still armed in the main process — Discord traffic stays
+    // blocked. Show a native blocking dialog so the user understands why
+    // Discord is not loading and what to do. Do NOT fall back to direct.
+    const errMsg =
+      `CottonCord could not activate the SOCKS5 proxy:\n\n` +
+      `${result.error ?? 'Unknown error'}\n\n` +
+      `Discord traffic is blocked to protect your IP address.\n` +
+      `Fix your VPN settings in CottonCord → IP Protection, then restart Discord.`;
+
+    // Fire-and-forget — dialog is blocking in the main process so this
+    // promise resolves only after the user closes the dialog.
+    ipcRenderer.invoke('cc:vpn:showError', 'CottonCord — Kill Switch Active', errMsg)
+      .catch(() => {});
+
+    throw new Error(result.error ?? 'setProxy failed');
+  }
 
   // Verify the proxy is working and capture masked IP
   try {
