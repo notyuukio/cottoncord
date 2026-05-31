@@ -439,8 +439,8 @@ loadAllPlugins().catch(err =>
 );
 
 window.VencordPluginLoader = {
-  getPlugins, enablePlugin, disablePlugin, reloadPlugin,
+  getPlugins, loadPlugin, enablePlugin, disablePlugin, reloadPlugin,
   getPluginCount: getLoadedCount,
 };
 
-module.exports = { getPlugins, enablePlugin, disablePlugin, reloadPlugin, getLoadedCount };
+module.exports = { getPlugins, loadPlugin, enablePlugin, disablePlugin, reloadPlugin, getLoadedCount };

@@ -274,6 +274,7 @@ loadAllPlugins();
 
 window.BDPluginLoader = {
   getPlugins,
+  loadPlugin,
   enablePlugin,
   disablePlugin,
   reloadPlugin,
@@ -282,6 +283,7 @@ window.BDPluginLoader = {
 
 module.exports = {
   getPlugins,
+  loadPlugin,
   enablePlugin,
   disablePlugin,
   reloadPlugin,

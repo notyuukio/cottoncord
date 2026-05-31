@@ -1,14 +1,9 @@
 'use strict';
 
-const fs   = require('fs');
-const path = require('path');
-const React     = window.ModuleStore?.findByProps?.('createElement', 'useState') ?? require('react');
+const path  = require('path');
+const React = window.ModuleStore?.findByProps?.('createElement', 'useState') ?? require('react');
 const Toggle    = require('../components/Toggle.jsx').default;
 const StatusBadge = require('../components/StatusBadge.jsx').default;
-
-const BD_DIR           = path.join(__dirname, '..', '..', '..', 'plugins', 'bd');
-const VC_DIR           = path.join(__dirname, '..', '..', '..', 'plugins', 'vencord');
-const CUSTOM_META_FILE = path.join(__dirname, '..', '..', '..', 'plugins', 'custom-meta.json');
 
 const ALL_TAGS = [
   'Accessibility', 'Activity', 'Appearance', 'Chat', 'Commands',
@@ -19,16 +14,6 @@ const ALL_TAGS = [
 const STATUS_OPTIONS = ['Show All', 'Enabled Only', 'Disabled Only', 'Broken'];
 
 // ── Shared helpers ─────────────────────────────────────────────────────────
-
-function readCustomMeta() {
-  try { return JSON.parse(fs.readFileSync(CUSTOM_META_FILE, 'utf8')); } catch (_) { return []; }
-}
-function saveCustomMeta(meta) {
-  try {
-    fs.mkdirSync(path.dirname(CUSTOM_META_FILE), { recursive: true });
-    fs.writeFileSync(CUSTOM_META_FILE, JSON.stringify(meta, null, 2));
-  } catch (_) {}
-}
 
 function getLoaderPlugins(source) {
   if (source === 'bd')      return window.BDPluginLoader?.getPlugins?.()      ?? [];
@@ -282,145 +267,366 @@ function PluginList({ plugins, source, extra = {} }) {
   );
 }
 
-// ── Custom plugins (install + manage) ─────────────────────────────────────
+// ── Custom plugins — install + manage ─────────────────────────────────────
 
-function CustomTab() {
-  const [meta,      setMeta]      = React.useState(readCustomMeta);
-  const [url,       setUrl]       = React.useState('');
-  const [installing,setInstalling]= React.useState(false);
-  const [dragOver,  setDragOver]  = React.useState(false);
+const BADGE_COLORS = { betterdiscord: '#23a55a', vencord: '#5865f2' };
+const BADGE_LABELS = { betterdiscord: 'BD', vencord: 'VC' };
 
-  function installFile(name, content, ext) {
-    const dest  = ext === '.ts' ? path.join(VC_DIR, name) : path.join(BD_DIR, name);
-    fs.mkdirSync(path.dirname(dest), { recursive: true });
-    fs.writeFileSync(dest, content, 'utf8');
-    const src   = ext === '.ts' ? 'vencord' : 'betterdiscord';
-    const entry = { name: path.basename(name, ext), file: dest, source: src, unverified: true, enabled: true };
-    const next  = [...meta.filter(m => m.name !== entry.name), entry];
-    saveCustomMeta(next);
-    setMeta(next);
+function SourceBadge({ source }) {
+  return (
+    <span style={{
+      display: 'inline-block', padding: '2px 6px', borderRadius: '3px',
+      fontSize: '10px', fontWeight: 700, textTransform: 'uppercase',
+      letterSpacing: '0.06em', lineHeight: '16px',
+      background: BADGE_COLORS[source] ?? '#4f545c',
+      color: '#fff',
+    }}>
+      {BADGE_LABELS[source] ?? source}
+    </span>
+  );
+}
+
+function UnverifiedBadge() {
+  return (
+    <span style={{
+      display: 'inline-block', padding: '2px 6px', borderRadius: '3px',
+      fontSize: '10px', fontWeight: 700, textTransform: 'uppercase',
+      letterSpacing: '0.06em', lineHeight: '16px',
+      background: '#f0b132', color: '#fff',
+    }}>
+      Unverified
+    </span>
+  );
+}
+
+function CustomPluginCard({ entry, onToggle, onRefresh, onRemove }) {
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  async function handleRefresh() {
+    setRefreshing(true);
+    try { await onRefresh(entry.id); } finally { setRefreshing(false); }
   }
 
+  const btnBase = {
+    padding: '4px 10px', borderRadius: '4px', border: 'none',
+    fontSize: '12px', fontWeight: 500, cursor: 'pointer',
+  };
+
+  return (
+    <div style={{
+      display: 'flex', alignItems: 'flex-start', gap: '12px',
+      padding: '14px 16px', background: '#2b2d31', borderRadius: '8px',
+      border: '1px solid #1e1f22',
+    }}>
+      {/* Info block */}
+      <div style={{ flex: 1, minWidth: 0 }}>
+        {/* Name + badges row */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', marginBottom: '4px' }}>
+          <span style={{ fontWeight: 700, color: '#f2f3f5', fontSize: '15px' }}>
+            {entry.name}
+          </span>
+          <SourceBadge source={entry.source} />
+          <UnverifiedBadge />
+          {entry.broken && (
+            <span style={{ padding: '2px 6px', borderRadius: '3px', fontSize: '10px',
+                           fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em',
+                           background: '#ed4245', color: '#fff' }}>Broken</span>
+          )}
+        </div>
+
+        {/* Author + version */}
+        <div style={{ fontSize: '12px', color: '#72767d', marginBottom: '4px' }}>
+          {entry.author !== 'Unknown' && <span>by <strong style={{ color: '#949ba4' }}>{entry.author}</strong></span>}
+          {entry.author !== 'Unknown' && entry.version !== '0.0.0' && <span>  ·  </span>}
+          {entry.version !== '0.0.0' && <span>v{entry.version}</span>}
+        </div>
+
+        {/* Description */}
+        {entry.description && (
+          <p style={{ margin: 0, fontSize: '13px', color: '#949ba4', lineHeight: '1.4',
+                      overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            {entry.description}
+          </p>
+        )}
+      </div>
+
+      {/* Controls */}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px', flexShrink: 0 }}>
+        <Toggle
+          enabled={entry.enabled && !entry.broken}
+          disabled={!!entry.broken}
+          onChange={v => onToggle(entry.id, v)}
+        />
+        <div style={{ display: 'flex', gap: '6px' }}>
+          {entry.sourceUrl && (
+            <button
+              onClick={handleRefresh}
+              disabled={refreshing}
+              title="Re-download from original URL"
+              style={{ ...btnBase, background: '#35373c', color: refreshing ? '#6d6f78' : '#dbdee1' }}
+            >
+              {refreshing ? '↻ …' : '↻ Update'}
+            </button>
+          )}
+          <button
+            onClick={() => onRemove(entry.id, entry.name)}
+            title="Remove plugin"
+            style={{ ...btnBase, background: '#3a1c1d', color: '#ed4245' }}
+          >
+            Remove
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CustomTab() {
+  const [plugins,    setPlugins]    = React.useState(() => window.CCCustomPlugins?.getMeta?.() ?? []);
+  const [url,        setUrl]        = React.useState('');
+  const [urlBusy,    setUrlBusy]    = React.useState(false);
+  const [urlError,   setUrlError]   = React.useState('');
+  const [dragOver,   setDragOver]   = React.useState(false);
+  const [dropError,  setDropError]  = React.useState('');
+  const fileInputRef = React.useRef(null);
+
+  const refresh = () => setPlugins(window.CCCustomPlugins?.getMeta?.() ?? []);
+
+  // ── process a File object (drop or browse) ─────────────────────────────
+  async function processFile(file) {
+    setDropError('');
+    const ext = path.extname(file.name).toLowerCase();
+    const mgr = window.CCCustomPlugins;
+    if (!mgr) { setDropError('Plugin manager not ready — please wait a moment and try again'); return; }
+
+    if (ext === '.zip') {
+      const buf    = await file.arrayBuffer();
+      const result = await mgr.installZip(buf, file.name);
+      if (result.ok) { mgr.showToast(`${result.entry.name} installed and loaded successfully`, 'success'); refresh(); }
+      else            { setDropError(result.reason); mgr.showToast(result.reason, 'error'); }
+      return;
+    }
+
+    if (!['.js', '.ts'].includes(ext)) {
+      setDropError('Only .js, .ts, and .zip files are supported');
+      return;
+    }
+
+    const text   = await file.text();
+    const result = await mgr.installPlugin(text, file.name, null);
+    if (result.ok) { mgr.showToast(`${result.entry.name} installed and loaded successfully`, 'success'); refresh(); }
+    else            { setDropError(result.reason); mgr.showToast(result.reason, 'error'); }
+  }
+
+  // ── drag and drop ──────────────────────────────────────────────────────
+  function handleDragOver(e) { e.preventDefault(); setDragOver(true); }
+  function handleDragLeave()  { setDragOver(false); }
   function handleDrop(e) {
     e.preventDefault(); setDragOver(false);
-    for (const file of e.dataTransfer.files) {
-      const ext = path.extname(file.name);
-      if (!['.js', '.ts'].includes(ext)) continue;
-      const reader = new FileReader();
-      reader.onload = ev => installFile(file.name, ev.target.result, ext);
-      reader.readAsText(file);
+    Array.from(e.dataTransfer.files).forEach(processFile);
+  }
+
+  // ── browse files ───────────────────────────────────────────────────────
+  function handleBrowse() { fileInputRef.current?.click(); }
+  function handleFileChange(e) {
+    Array.from(e.target.files ?? []).forEach(processFile);
+    e.target.value = '';
+  }
+
+  // ── GitHub URL install ─────────────────────────────────────────────────
+  async function handleInstallUrl() {
+    const raw = url.trim();
+    if (!raw) return;
+    const mgr = window.CCCustomPlugins;
+    if (!mgr) return;
+
+    setUrlBusy(true); setUrlError('');
+    try {
+      let resolvedUrl = raw;
+      const isRepo = /^https?:\/\/github\.com\/[^/]+\/[^/]+\/?$/.test(raw);
+      if (isRepo) {
+        resolvedUrl = await mgr.resolveRepoUrl(raw);
+        if (!resolvedUrl) throw new Error('Could not find a plugin file in that repository — make sure it has index.ts, index.js, plugin.ts, or plugin.js in the root');
+      } else {
+        resolvedUrl = mgr.normalizeGitHubUrl(raw);
+      }
+
+      const resp = await fetch(resolvedUrl);
+      if (!resp.ok) throw new Error(`Could not download from that URL — check the link and try again (HTTP ${resp.status})`);
+      const content  = await resp.text();
+      const filename = resolvedUrl.split('/').pop() || 'plugin.js';
+      const result   = await mgr.installPlugin(content, filename, raw);
+
+      if (!result.ok) throw new Error(result.reason);
+      mgr.showToast(`${result.entry.name} installed and loaded successfully`, 'success');
+      setUrl('');
+      refresh();
+    } catch (err) {
+      const msg = err.message || 'Could not download from that URL — check the link and try again';
+      setUrlError(msg);
+      mgr.showToast(msg, 'error');
+    } finally {
+      setUrlBusy(false);
     }
   }
 
-  async function handleInstallUrl() {
-    if (!url.trim()) return;
-    setInstalling(true);
-    try {
-      const resp = await fetch(url);
-      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-      const content = await resp.text();
-      const name    = url.split('/').pop() || 'plugin.js';
-      installFile(name, content, path.extname(name) || '.js');
-      setUrl('');
-    } catch (err) { alert(`Install failed: ${err.message}`); }
-    finally { setInstalling(false); }
+  function handleUrlKeyDown(e) { if (e.key === 'Enter') handleInstallUrl(); }
+
+  // ── card actions ───────────────────────────────────────────────────────
+  async function handleRefresh(id) {
+    const result = await window.CCCustomPlugins?.refreshPlugin?.(id);
+    if (!result) return;
+    if (result.ok) window.CCCustomPlugins.showToast('Plugin updated successfully', 'success');
+    else           window.CCCustomPlugins.showToast(result.reason, 'error');
+    refresh();
   }
 
-  function removePlugin(name) {
-    const entry = meta.find(m => m.name === name);
-    if (entry) { try { fs.unlinkSync(entry.file); } catch (_) {} }
-    const next = meta.filter(m => m.name !== name);
-    saveCustomMeta(next); setMeta(next);
+  function handleRemove(id, name) {
+    window.CCCustomPlugins?.uninstallPlugin?.(id);
+    window.CCCustomPlugins?.showToast?.(`${name} removed`, 'info');
+    refresh();
   }
 
-  // Build a plugin-list-compatible array from meta
-  const customPlugins = meta.map(m => ({
-    name:        m.name,
-    description: m.description ?? 'Unverified custom plugin',
-    source:      m.source,
-    enabled:     m.enabled ?? true,
-    unverified:  true,
-    tags:        [],
-  }));
-
-  function handleToggle(name, val) {
-    const entry = meta.find(m => m.name === name);
-    if (!entry) return;
-    const loader = entry.source === 'vencord' ? window.VencordPluginLoader : window.BDPluginLoader;
-    val ? loader?.enablePlugin?.(name) : loader?.disablePlugin?.(name);
-    const next = meta.map(m => m.name === name ? { ...m, enabled: val } : m);
-    saveCustomMeta(next); setMeta(next);
+  function handleToggle(id, val) {
+    if (val) window.CCCustomPlugins?.enablePlugin?.(id);
+    else     window.CCCustomPlugins?.disablePlugin?.(id);
+    refresh();
   }
+
+  // ── styles ─────────────────────────────────────────────────────────────
+  const inputStyle = {
+    flex: 1, padding: '9px 12px', borderRadius: '4px',
+    border: `1px solid ${urlError ? '#ed4245' : '#3d3f45'}`,
+    background: '#1e1f22', color: '#dbdee1', fontSize: '14px', outline: 'none',
+  };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-      {/* Drop zone */}
-      <div
-        onDragOver={e => { e.preventDefault(); setDragOver(true); }}
-        onDragLeave={() => setDragOver(false)}
-        onDrop={handleDrop}
-        style={{
-          border: `2px dashed ${dragOver ? '#5865f2' : '#3d3f45'}`,
-          borderRadius: '8px', padding: '24px', textAlign: 'center',
-          color: '#6d6f78', fontSize: '14px', transition: 'border-color 0.15s',
-          background: dragOver ? '#1e202450' : 'transparent',
-        }}
-      >
-        Drop <strong>.js</strong> or <strong>.ts</strong> files here to install
-      </div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
 
-      {/* URL installer */}
-      <div style={{ display: 'flex', gap: '8px' }}>
-        <input
-          value={url} onChange={e => setUrl(e.target.value)}
-          placeholder="GitHub raw URL to .js / .ts plugin…"
+      {/* ── Drop zone + Browse ──────────────────────────────────────────── */}
+      <div>
+        <div style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase',
+                      letterSpacing: '0.06em', color: '#949ba4', marginBottom: '8px' }}>
+          Install from File
+        </div>
+        <div
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
           style={{
-            flex: 1, padding: '8px 12px', borderRadius: '4px',
-            border: '1px solid #3d3f45', background: '#1e1f22',
-            color: '#dbdee1', fontSize: '14px', outline: 'none',
-          }}
-        />
-        <button
-          onClick={handleInstallUrl} disabled={installing}
-          style={{
-            padding: '8px 16px', borderRadius: '4px', border: 'none',
-            background: '#5865f2', color: '#fff', cursor: 'pointer',
-            fontSize: '14px', fontWeight: 500, opacity: installing ? 0.6 : 1,
+            border: `2px dashed ${dragOver ? '#5865f2' : dropError ? '#ed4245' : '#3d3f45'}`,
+            borderRadius: '8px', padding: '28px 20px', textAlign: 'center',
+            color: dragOver ? '#5865f2' : '#6d6f78', fontSize: '14px',
+            transition: 'all 0.15s',
+            background: dragOver ? 'rgba(88,101,242,0.07)' : 'transparent',
+            cursor: 'default',
           }}
         >
-          {installing ? 'Installing…' : 'Install'}
-        </button>
+          <div style={{ fontSize: '28px', marginBottom: '8px', lineHeight: 1 }}>📂</div>
+          <div>
+            Drag and drop <strong style={{ color: '#dbdee1' }}>.js</strong>,{' '}
+            <strong style={{ color: '#dbdee1' }}>.ts</strong>, or{' '}
+            <strong style={{ color: '#dbdee1' }}>.zip</strong> plugin files here
+          </div>
+          <div style={{ marginTop: '12px' }}>
+            <button
+              onClick={handleBrowse}
+              style={{
+                padding: '7px 18px', borderRadius: '4px', border: 'none',
+                background: '#35373c', color: '#dbdee1', cursor: 'pointer',
+                fontSize: '13px', fontWeight: 500,
+              }}
+            >
+              Browse Files…
+            </button>
+          </div>
+        </div>
+        {dropError && (
+          <div style={{ marginTop: '8px', padding: '8px 12px', borderRadius: '4px',
+                        background: '#3a1c1d', color: '#ed4245', fontSize: '13px' }}>
+            {dropError}
+          </div>
+        )}
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept=".js,.ts,.zip"
+          multiple
+          style={{ display: 'none' }}
+          onChange={handleFileChange}
+        />
       </div>
 
-      {/* List with shared filter bar */}
-      {customPlugins.length > 0 && (
-        <PluginList
-          plugins={customPlugins}
-          source={null}
-          extra={{ onToggle: handleToggle }}
-        />
-      )}
-
-      {/* Remove buttons rendered outside PluginList to preserve existing logic */}
-      {customPlugins.length > 0 && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '-8px' }}>
-          {meta.map(m => (
-            <div key={m.name} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <button
-                onClick={() => removePlugin(m.name)}
-                style={{
-                  padding: '3px 10px', borderRadius: '4px', border: 'none',
-                  background: '#ed4245', color: '#fff', cursor: 'pointer', fontSize: '11px',
-                }}
-              >Remove {m.name}</button>
-            </div>
-          ))}
+      {/* ── GitHub URL install ──────────────────────────────────────────── */}
+      <div>
+        <div style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase',
+                      letterSpacing: '0.06em', color: '#949ba4', marginBottom: '8px' }}>
+          Install from GitHub URL
         </div>
-      )}
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <input
+            value={url}
+            onChange={e => { setUrl(e.target.value); setUrlError(''); }}
+            onKeyDown={handleUrlKeyDown}
+            placeholder="https://github.com/user/repo  or  raw.githubusercontent.com/…/plugin.js"
+            style={inputStyle}
+          />
+          <button
+            onClick={handleInstallUrl}
+            disabled={urlBusy || !url.trim()}
+            style={{
+              padding: '8px 18px', borderRadius: '4px', border: 'none',
+              background: '#5865f2', color: '#fff', cursor: urlBusy ? 'default' : 'pointer',
+              fontSize: '14px', fontWeight: 500,
+              opacity: (urlBusy || !url.trim()) ? 0.6 : 1,
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {urlBusy ? 'Installing…' : 'Install'}
+          </button>
+        </div>
+        {urlError && (
+          <div style={{ marginTop: '8px', padding: '8px 12px', borderRadius: '4px',
+                        background: '#3a1c1d', color: '#ed4245', fontSize: '13px' }}>
+            {urlError}
+          </div>
+        )}
+        <div style={{ marginTop: '6px', fontSize: '12px', color: '#4f545c' }}>
+          Accepted: raw file URL · GitHub blob URL (auto-converted) · GitHub repo URL (finds index.ts/js automatically)
+        </div>
+      </div>
 
-      {customPlugins.length === 0 && (
-        <p style={{ color: '#6d6f78', fontSize: '14px' }}>No custom plugins installed yet.</p>
-      )}
+      {/* ── Installed custom plugins ────────────────────────────────────── */}
+      <div>
+        <div style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase',
+                      letterSpacing: '0.06em', color: '#949ba4', marginBottom: '8px' }}>
+          Installed Custom Plugins{plugins.length > 0 ? ` (${plugins.length})` : ''}
+        </div>
+
+        {plugins.length === 0 ? (
+          <div style={{ padding: '20px', textAlign: 'center', color: '#4f545c',
+                        fontSize: '14px', background: '#2b2d31', borderRadius: '8px',
+                        border: '1px dashed #3d3f45' }}>
+            No custom plugins installed yet.
+            <br />
+            <span style={{ fontSize: '12px', color: '#3d3f45', marginTop: '4px', display: 'block' }}>
+              Drop a plugin file above or paste a GitHub URL to get started.
+            </span>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {plugins.map(entry => (
+              <CustomPluginCard
+                key={entry.id}
+                entry={entry}
+                onToggle={handleToggle}
+                onRefresh={handleRefresh}
+                onRemove={handleRemove}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -442,7 +648,7 @@ export default function PluginsTab() {
   const tabs = [
     { id: 'bd',      label: 'BetterDiscord', count: bdPlugins.length,  badgeColor: '#23a55a' },
     { id: 'vencord', label: 'Vencord',       count: vcPlugins.length,  badgeColor: '#5865f2' },
-    { id: 'custom',  label: 'Custom',        count: readCustomMeta().length, badgeColor: '#4f545c', warn: true },
+    { id: 'custom',  label: 'Custom',        count: (window.CCCustomPlugins?.getMeta?.() ?? []).length, badgeColor: '#f0b132', warn: true },
   ];
 
   return (

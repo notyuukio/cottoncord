@@ -111,6 +111,14 @@ function poll(predicate, intervalMs = 100, maxAttempts = 300) {
     console.error('[CottonCord] ❌ vencordLoader:', err.message);
   }
 
+  // 5b ── Custom plugin manager + load user-installed plugins
+  try {
+    require(path.join(ROOT, 'core', 'customPluginManager.js'));
+    await window.CCCustomPlugins.loadAllCustomPlugins();
+  } catch (err) {
+    console.error('[CottonCord] ❌ customPluginManager:', err.message);
+  }
+
   // 6 ── Settings panel (injects into Discord sidebar)
   try {
     require(path.join(ROOT, 'ui', 'settingsPanel.jsx'));
@@ -150,19 +158,21 @@ function poll(predicate, intervalMs = 100, maxAttempts = 300) {
   };
 
   // ── Startup banner ────────────────────────────────────────────────────────
-  const version  = '1.0.0';
-  const webpack  = window.ModuleStore?.getModuleCount?.()         ?? 0;
-  const bdCount  = window.BDPluginLoader?.getLoadedCount?.()      ?? 0;
-  const vcCount  = window.VencordPluginLoader?.getLoadedCount?.() ?? 0;
-  const vpnOn    = window.CottonCordVPN?.getStatus?.()?.connected ?? false;
-  const ipStatus = vpnOn ? 'Protected' : 'Unprotected';
-  const bar      = '━'.repeat(25);
+  const version    = '1.0.0';
+  const webpack    = window.ModuleStore?.getModuleCount?.()           ?? 0;
+  const bdCount    = window.BDPluginLoader?.getLoadedCount?.()        ?? 0;
+  const vcCount    = window.VencordPluginLoader?.getLoadedCount?.()   ?? 0;
+  const custCount  = window.CCCustomPlugins?.getLoadedCount?.()       ?? 0;
+  const vpnOn      = window.CottonCordVPN?.getStatus?.()?.connected   ?? false;
+  const ipStatus   = vpnOn ? 'Protected' : 'Unprotected';
+  const bar        = '━'.repeat(25);
 
   console.log(
     `%c${bar}\n  CottonCord v${version} 🐰\n${bar}\n` +
     `  📦 [${webpack}] webpack modules\n` +
     `  🟨 [${bdCount}] BD plugins\n` +
     `  🟦 [${vcCount}] Vencord plugins\n` +
+    `  🔧 [${custCount}] custom plugins\n` +
     `  🛡️  IP: ${ipStatus}\n` +
     bar,
     'color:#7289da;font-weight:bold;font-size:12px',
