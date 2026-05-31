@@ -48,7 +48,8 @@ function findDiscordResources() {
         if (fs.existsSync(res)) return res;
       }
     } else {
-      if (fs.existsSync(path.join(candidate, 'app.asar'))) return candidate;
+      if (fs.existsSync(path.join(candidate, 'app.asar')) ||
+          fs.existsSync(path.join(candidate, '_app.asar'))) return candidate;
     }
   }
   return null;
@@ -87,37 +88,104 @@ function rmDirSync(dir) {
 // ── Locate CottonCord src/ ─────────────────────────────────────────────────
 
 function getCottonCordSrc() {
-  const devSrc = path.join(__dirname, '..', 'src');
-  if (fs.existsSync(devSrc)) return devSrc;
-  const pkgSrc = path.join(process.resourcesPath, 'src');
-  if (fs.existsSync(pkgSrc)) return pkgSrc;
+  // In the packaged installer: src/ is at resources/src via extraResources.
+  // __dirname inside app.asar resolves to the asar root which sits in resources/.
+  const candidates = [
+    path.join(__dirname, '..', 'src'),      // packaged: resources/src
+    path.join(process.resourcesPath, 'src'), // explicit resourcesPath
+    path.join(__dirname, '..', '..', 'src'), // dev: installer/../src
+  ];
+  for (const c of candidates) {
+    try { if (fs.statSync(c).isDirectory()) return c; } catch (_) {}
+  }
   throw new Error('Cannot locate CottonCord src/ directory.');
+}
+
+// ── Minimal ASAR builder ───────────────────────────────────────────────────
+// Creates a valid ASAR archive containing a single JS file.
+// This avoids a dependency on @electron/asar at runtime.
+// Format: [4-byte outer-pickle-size][4-byte header-pickle-size][header-pickle][file-bytes]
+// The "pickle" for a string is: [4-byte LE string-length][string bytes][padding to 4-byte align]
+
+function buildMinimalAsar(filename, jsContent) {
+  const fileBuf    = Buffer.from(jsContent, 'utf8');
+  const headerJson = JSON.stringify({ files: { [filename]: { size: fileBuf.length, offset: '0' } } });
+  const headerRaw  = Buffer.from(headerJson, 'utf8');
+
+  // Inner pickle: 4-byte length + raw bytes + alignment padding
+  const innerLen     = 4 + headerRaw.length;
+  const innerPadded  = Math.ceil(innerLen / 4) * 4;
+  const innerPickle  = Buffer.alloc(innerPadded, 0);
+  innerPickle.writeUInt32LE(headerRaw.length, 0);
+  headerRaw.copy(innerPickle, 4);
+
+  // Outer pickle: [4-byte LE = 4][4-byte LE = innerPickle.length]
+  const outerPickle = Buffer.alloc(8);
+  outerPickle.writeUInt32LE(4, 0);
+  outerPickle.writeUInt32LE(innerPickle.length, 4);
+
+  return Buffer.concat([outerPickle, innerPickle, fileBuf]);
 }
 
 // ── Install / Uninstall ────────────────────────────────────────────────────
 
+function isInstalled(resourcesPath) {
+  return fs.existsSync(path.join(resourcesPath, 'app.asar.bak'));
+}
+
 function doInstall(resourcesPath) {
-  const appDir = path.join(resourcesPath, 'app');
-  const src    = getCottonCordSrc();
+  const src        = getCottonCordSrc();
+  const appAsarPath = path.join(resourcesPath, 'app.asar');
+  const backupPath  = path.join(resourcesPath, 'app.asar.bak');
+  const ccDir       = path.join(resourcesPath, 'cottoncord');
 
-  fs.mkdirSync(appDir, { recursive: true });
+  // Step 1: Copy CottonCord source into resources/cottoncord/ (bootstrap won't touch this)
+  rmDirSync(ccDir);
+  copyDirSync(src, ccDir);
 
-  fs.writeFileSync(
-    path.join(appDir, 'package.json'),
-    JSON.stringify({ name: 'cottoncord', main: 'index.js' }, null, 2),
-  );
+  // Step 2: Back up the original app.asar stub (only once)
+  if (!fs.existsSync(backupPath)) {
+    if (fs.existsSync(appAsarPath)) {
+      fs.copyFileSync(appAsarPath, backupPath);
+    }
+  }
 
-  fs.writeFileSync(path.join(appDir, 'index.js'), [
+  // Step 3: Write a patched app.asar that loads CottonCord then chains to Discord.
+  // __dirname inside this ASAR resolves to resources/, so ../cottoncord is correct.
+  const loaderJs = [
     "'use strict';",
-    "try { require('./src/injector/index.js'); }",
-    "catch (err) { require('../app.asar'); }",
-  ].join('\n'));
+    "const path = require('path');",
+    "const fs   = require('fs');",
+    "try {",
+    "  require(path.join(__dirname, '..', 'cottoncord', 'injector', 'index.js'));",
+    "} catch (err) {",
+    "  console.error('[CottonCord] injector failed:', err.message);",
+    "  // Fall back to the real Discord asar",
+    "  const real = [",
+    "    path.join(__dirname, '..', '_app.asar'),",
+    "    path.join(__dirname, '..', 'app.asar.bak'),",
+    "  ].find(p => { try { return fs.statSync(p).size > 10240; } catch(_){} });",
+    "  if (real) require(real);",
+    "}",
+  ].join('\n');
 
-  copyDirSync(src, path.join(appDir, 'src'));
+  const asarBuf = buildMinimalAsar('index.js', loaderJs);
+  fs.writeFileSync(appAsarPath, asarBuf);
 }
 
 function doUninstall(resourcesPath) {
-  rmDirSync(path.join(resourcesPath, 'app'));
+  const appAsarPath = path.join(resourcesPath, 'app.asar');
+  const backupPath  = path.join(resourcesPath, 'app.asar.bak');
+  const ccDir       = path.join(resourcesPath, 'cottoncord');
+
+  // Restore original app.asar
+  if (fs.existsSync(backupPath)) {
+    fs.copyFileSync(backupPath, appAsarPath);
+    fs.unlinkSync(backupPath);
+  }
+
+  // Remove CottonCord files
+  rmDirSync(ccDir);
 }
 
 // ── IPC handlers ───────────────────────────────────────────────────────────
@@ -127,7 +195,7 @@ ipcMain.handle('get-info', () => {
   return {
     resourcesPath: resources,
     version:       readDiscordVersion(resources),
-    installed:     resources ? fs.existsSync(path.join(resources, 'app')) : false,
+    installed:     resources ? isInstalled(resources) : false,
   };
 });
 

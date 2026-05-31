@@ -6,9 +6,19 @@ const fs     = require('fs');
 
 const PRELOAD_PATH = path.join(__dirname, 'preload.js');
 
-const ASAR_PATH = process.resourcesPath
-  ? path.join(process.resourcesPath, 'app.asar')
-  : path.join(__dirname, '..', '..', '..', 'app.asar');
+// Newer Discord versions use _app.asar as the real app; app.asar is a 1 KB stub.
+// Prefer _app.asar when present, fall back to app.asar for older installs.
+function resolveAsarPath() {
+  const base = process.resourcesPath || path.join(__dirname, '..', '..', '..');
+  const candidates = [
+    path.join(base, '_app.asar'),
+    path.join(base, 'app.asar'),
+  ];
+  return candidates.find(p => {
+    try { return fs.statSync(p).size > 10240; } catch (_) { return false; }
+  }) ?? candidates[1];
+}
+const ASAR_PATH = resolveAsarPath();
 
 // ── BrowserWindow patch ────────────────────────────────────────────────────
 
