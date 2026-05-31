@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
       - name: Install dependencies
         run: npm ci
         working-directory: installer
@@ -32,7 +32,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
       - name: Install dependencies
         run: npm ci
         working-directory: installer
@@ -51,7 +51,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
       - name: Install dependencies
         run: npm ci
         working-directory: installer
@@ -66,6 +66,8 @@ jobs:
 
   release:
     needs: [build-windows, build-mac, build-linux]
+    # Run as long as Windows succeeded — Mac/Linux are optional
+    if: always() && needs.build-windows.result == 'success'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -81,3 +83,4 @@ jobs:
             artifacts/cottoncord-mac/**/*.dmg
             artifacts/cottoncord-linux/**/*.AppImage
           generate_release_notes: true
+          tag_name: latest

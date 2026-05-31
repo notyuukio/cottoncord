@@ -50,16 +50,9 @@
     },
     "mac": {
       "target": [
-        {
-          "target": "dmg",
-          "arch": [
-            "x64",
-            "arm64"
-          ]
-        }
+        { "target": "dmg", "arch": ["x64", "arm64"] }
       ],
-      "category": "public.app-category.utilities",
-      "icon": "ui/icon.icns"
+      "category": "public.app-category.utilities"
     },
     "dmg": {
       "title": "CottonCord Installer"
