@@ -25,9 +25,11 @@ jobs:
         with:
           name: cottoncord-win
           path: installer/dist/*.exe
+          retention-days: 7
 
   build-mac:
     runs-on: macos-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -44,6 +46,7 @@ jobs:
         with:
           name: cottoncord-mac
           path: installer/dist/*.dmg
+          retention-days: 7
 
   build-linux:
     runs-on: ubuntu-latest
@@ -63,11 +66,11 @@ jobs:
         with:
           name: cottoncord-linux
           path: installer/dist/*.AppImage
+          retention-days: 7
 
   release:
-    needs: [build-windows, build-mac, build-linux]
-    # Run as long as Windows succeeded — Mac/Linux are optional
-    if: always() && needs.build-windows.result == 'success'
+    needs: [build-windows, build-linux]
+    if: always() && needs.build-windows.result == 'success' && startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -83,4 +86,3 @@ jobs:
             artifacts/cottoncord-mac/**/*.dmg
             artifacts/cottoncord-linux/**/*.AppImage
           generate_release_notes: true
-          tag_name: latest
