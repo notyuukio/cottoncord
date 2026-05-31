@@ -5,20 +5,21 @@
   "main": "main.js",
   "private": true,
   "scripts": {
-    "start":     "electron .",
+    "start": "electron .",
     "build:win": "electron-builder --win",
     "build:mac": "electron-builder --mac",
     "build:linux": "electron-builder --linux"
   },
-  "dependencies": {
-    "electron": "^29.0.0"
-  },
+  "author": "notyuukio",
+  "dependencies": {},
   "devDependencies": {
-    "electron-builder": "^24.0.0"
+    "electron": "^29.0.0",
+    "electron-builder": "^24.13.3"
   },
   "build": {
     "appId": "com.cottoncord.installer",
     "productName": "CottonCord Installer",
+    "publish": null,
     "copyright": "Copyright © 2024 notyuukio",
     "files": [
       "main.js",
@@ -28,22 +29,35 @@
     "extraResources": [
       {
         "from": "../src",
-        "to":   "src",
-        "filter": ["**/*"]
+        "to": "src",
+        "filter": [
+          "**/*"
+        ]
       }
     ],
     "win": {
-      "target": [{ "target": "nsis", "arch": ["x64"] }],
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "zip",  "arch": ["x64"] }
+      ],
       "icon": "ui/icon.ico"
     },
     "nsis": {
-      "oneClick":           true,
+      "oneClick": true,
       "allowToChangeInstallationDirectory": false,
       "createDesktopShortcut": true,
-      "runAfterFinish":    true
+      "runAfterFinish": true
     },
     "mac": {
-      "target": [{ "target": "dmg", "arch": ["x64", "arm64"] }],
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
       "category": "public.app-category.utilities",
       "icon": "ui/icon.icns"
     },
@@ -51,7 +65,14 @@
       "title": "CottonCord Installer"
     },
     "linux": {
-      "target": [{ "target": "AppImage", "arch": ["x64"] }],
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
       "category": "Utility",
       "icon": "ui/icon.png"
     },

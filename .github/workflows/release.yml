@@ -23,7 +23,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: cottoncord-win
-          path: installer/release/*.exe
+          path: installer/dist/*.exe
 
   build-mac:
     runs-on: macos-latest
@@ -42,7 +42,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: cottoncord-mac
-          path: installer/release/*.dmg
+          path: installer/dist/*.dmg
 
   build-linux:
     runs-on: ubuntu-latest
@@ -61,7 +61,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: cottoncord-linux
-          path: installer/release/*.AppImage
+          path: installer/dist/*.AppImage
 
   release:
     needs: [build-windows, build-mac, build-linux]
@@ -76,7 +76,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            artifacts/cottoncord-win/*.exe
-            artifacts/cottoncord-mac/*.dmg
-            artifacts/cottoncord-linux/*.AppImage
+            artifacts/cottoncord-win/**/*.exe
+            artifacts/cottoncord-mac/**/*.dmg
+            artifacts/cottoncord-linux/**/*.AppImage
           generate_release_notes: true
