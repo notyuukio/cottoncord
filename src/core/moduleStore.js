@@ -5,54 +5,61 @@
 
 const modules = new Map();
 
-// ── 1. Poll for webpackChunkdiscord_app ────────────────────────────────────
+// ── 1. Poll for webpack chunk ──────────────────────────────────────────────
+// Handles any webpackChunk* global, not just the hardcoded discord_app name,
+// and falls back to __webpack_require__.c if the push-based approach fails.
+
+function findWebpackChunk() {
+  if (Array.isArray(window.webpackChunkdiscord_app)) return window.webpackChunkdiscord_app;
+  for (const key of Object.keys(window)) {
+    if (key.startsWith('webpackChunk') && Array.isArray(window[key])) return window[key];
+  }
+  return null;
+}
 
 function waitForWebpack() {
   return new Promise((resolve) => {
-    if (window.webpackChunkdiscord_app) {
-      resolve(window.webpackChunkdiscord_app);
-      return;
-    }
+    const chunk = findWebpackChunk();
+    if (chunk) { resolve(chunk); return; }
     const interval = setInterval(() => {
-      if (window.webpackChunkdiscord_app) {
-        clearInterval(interval);
-        resolve(window.webpackChunkdiscord_app);
-      }
+      const c = findWebpackChunk();
+      if (c) { clearInterval(interval); resolve(c); return; }
+      // Direct cache fallback: __webpack_require__ is set by Discord as a global
+      if (window.__webpack_require__?.c) { clearInterval(interval); resolve(null); }
     }, 100);
   });
 }
 
-// ── 2. Push a fake chunk to capture Discord's require and walk require.c ───
+// ── 2. Capture modules from Discord's require cache ────────────────────────
+
+function walkCache(cache) {
+  for (const id in cache) {
+    try {
+      const mod = cache[id];
+      if (!mod?.exports) continue;
+      modules.set(id, mod.exports);
+    } catch (_) {}
+  }
+}
 
 function captureModules(webpackChunk) {
   return new Promise((resolve) => {
+    // Path A: chunk is null — __webpack_require__ is already available
+    if (!webpackChunk) {
+      try { walkCache(window.__webpack_require__.c); } catch (_) {}
+      resolve();
+      return;
+    }
+
+    // Path B: push a fake chunk to receive Discord's require function
     webpackChunk.push([
       [Symbol('cottoncord')],
       {},
       (require) => {
-        try {
-          const moduleCache = require.c ?? {};
-          for (const id in moduleCache) {
-            const mod = moduleCache[id];
-            if (!mod?.exports) continue;
-            modules.set(id, mod.exports);
-
-            // Also index sub-keys for modules that export a namespace object
-            if (typeof mod.exports === 'object') {
-              for (const key of Object.keys(mod.exports)) {
-                try {
-                  const sub = mod.exports[key];
-                  if (sub && typeof sub === 'object' && !modules.has(`${id}:${key}`)) {
-                    // We don't store these separately — filters already check .default
-                  }
-                } catch (_) {
-                  // ignore non-enumerable getters that throw
-                }
-              }
-            }
-          }
-        } catch (err) {
+        try { walkCache(require.c ?? {}); } catch (err) {
           console.error('[CottonCord] moduleStore: error walking require.c:', err.message);
+          // Last resort: try global __webpack_require__
+          try { if (window.__webpack_require__?.c) walkCache(window.__webpack_require__.c); } catch (_) {}
         }
         resolve();
       },

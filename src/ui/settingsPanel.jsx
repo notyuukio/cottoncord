@@ -83,46 +83,61 @@ function CCSettingsPanel({ initialTab }) {
 }
 
 // ── Discord settings injection ─────────────────────────────────────────────
-// Strategy: patch getPredicateSections on the settings-view component so our
-// sections appear in the sidebar natively. Falls back to MutationObserver
-// DOM injection if the component cannot be located via findByString.
+// Three layers, tried in order:
+//   1. Patch getPredicateSections (webpack, multiple search strings)
+//   2. React fiber tree walk (finds the live component when the panel opens)
+//   3. DOM injection with stable role/aria selectors (final fallback)
 
 let _injected = false;
 
-function patchGetPredicateSections() {
-  const store   = window.ModuleStore;
+// Strings that have appeared in Discord's settings-view component across versions
+const SETTINGS_SEARCH_STRINGS = [
+  'getPredicateSections',
+  'section:this.props.section',
+  'settingsNavItems',
+  'USER_SETTINGS',
+  'CUSTOM_SECTION',
+];
+
+function buildSections() {
+  return [
+    { section: 'DIVIDER' },
+    { section: 'HEADER', label: 'CottonCord' },
+    ...TABS.map(t => ({ section: t.id, label: t.label, element: makeTabElement(t) })),
+  ];
+}
+
+function tryPatchCandidate(candidate) {
   const patcher = window.CottonCordPatcher;
-  if (!store || !patcher) return false;
-
-  // Common strings found in Discord's settings-view component
-  const candidate = store.findByString('getPredicateSections');
-  if (!candidate) return false;
-
-  const proto = candidate.prototype ?? candidate;
-
-  // The method may be on the prototype or directly on the module object
+  if (!patcher) return false;
+  const proto = candidate?.prototype ?? candidate;
+  if (!proto) return false;
   const methodName = Object.getOwnPropertyNames(proto).find(k =>
-    k === 'getPredicateSections' || (typeof proto[k] === 'function' &&
-      proto[k].toString().includes('section'))
+    k === 'getPredicateSections' ||
+    (typeof proto[k] === 'function' && proto[k].toString().includes('section'))
   );
   if (!methodName) return false;
-
-  patcher.after('CottonCord-Settings', proto, methodName, (ctx, args, sections) => {
+  patcher.after('CottonCord-Settings', proto, methodName, (_ctx, _args, sections) => {
     if (!Array.isArray(sections)) return;
-    if (sections.some(s => s.section === 'cc-main')) return; // already injected
-
-    sections.push(
-      { section: 'DIVIDER' },
-      { section: 'HEADER',  label: 'CottonCord' },
-      ...TABS.map(t => ({
-        section: t.id,
-        label:   t.label,
-        element: makeTabElement(t),
-      })),
-    );
+    if (sections.some(s => s.section === 'cc-main')) return;
+    sections.push(...buildSections());
   });
-
   return true;
+}
+
+function patchGetPredicateSections() {
+  const store = window.ModuleStore;
+  if (!store) return false;
+  for (const str of SETTINGS_SEARCH_STRINGS) {
+    try {
+      const candidate = store.findByString(str);
+      if (candidate && tryPatchCandidate(candidate)) {
+        console.log(`[CottonCord] ✅ settingsPanel patched via "${str}"`);
+        return true;
+      }
+    } catch (_) {}
+  }
+  return false;
 }
 
 function makeTabElement(tab) {
@@ -136,23 +151,84 @@ function makeTabElement(tab) {
   };
 }
 
-// ── DOM fallback injection ─────────────────────────────────────────────────
-// If patchGetPredicateSections couldn't find the component, we watch for the
-// settings DOM to appear and inject sidebar items + a content mount point.
+// ── Layer 2: React fiber walk ──────────────────────────────────────────────
+// When the settings panel opens, walk the React fiber tree from a known DOM
+// node to find the component that renders the sections list and force-update it.
+
+function getFiber(el) {
+  if (!el) return null;
+  const key = Object.keys(el).find(
+    k => k.startsWith('__reactFiber') || k.startsWith('__reactInternalInstance')
+  );
+  return key ? el[key] : null;
+}
+
+function fiberWalkUp(fiber, predicate) {
+  let f = fiber;
+  while (f) {
+    try { if (predicate(f)) return f; } catch (_) {}
+    f = f.return;
+  }
+  return null;
+}
+
+function tryFiberInject(sidebarEl) {
+  const fiber = getFiber(sidebarEl);
+  if (!fiber) return false;
+  // Find the nearest class component with setState that renders sections
+  const target = fiberWalkUp(fiber, f => {
+    const si = f.stateNode;
+    return si && typeof si.setState === 'function' &&
+           si.props && (si.props.sections || si.props.predicate || si.props.onClose);
+  });
+  if (!target) return false;
+  const si = target.stateNode;
+  const existingSections = si.state?.sections ?? si.props?.sections;
+  if (!Array.isArray(existingSections)) return false;
+  if (existingSections.some(s => s.section === 'cc-main')) return true; // already done
+  // Append our sections and re-render
+  try {
+    si.setState(prev => ({
+      ...prev,
+      sections: [...(prev?.sections ?? existingSections), ...buildSections()],
+    }));
+    console.log('[CottonCord] ✅ settingsPanel injected via fiber walk');
+    return true;
+  } catch (_) { return false; }
+}
+
+// ── Layer 3: DOM injection ─────────────────────────────────────────────────
+// Fallback with stable role/aria selectors that survive class renames.
 
 let _domObserver = null;
 let _activeCCTab = TABS[0].id;
 let _contentMount = null;
 
+function findSidebar() {
+  // Try stable selectors first (role/aria attributes don't get renamed)
+  const byRole = document.querySelector('[class*="sidebar"] [role="listitem"]')?.parentElement;
+  if (byRole) return byRole;
+  const byNav  = document.querySelector('nav[aria-label]');
+  if (byNav)  return byNav;
+  // Broader class-name patterns as last resort
+  return document.querySelector('[class*="sidebar"]')
+      ?? document.querySelector('[class*="sidebarList"]');
+}
+
 function setupDOMInjection() {
   if (_domObserver) return;
 
   _domObserver = new MutationObserver(() => {
-    // Discord's settings sidebar: look for the nav that contains known items
-    const sidebar = document.querySelector('[class*="sidebar-"] [class*="scroller-"]')
-                 ?? document.querySelector('[class*="sidebarList"]');
+    const sidebar = findSidebar();
     if (!sidebar || sidebar.dataset.ccDone) return;
-    sidebar.dataset.ccDone = 'true';
+
+    // Try React fiber inject first (less invasive than raw DOM)
+    if (tryFiberInject(sidebar)) {
+      sidebar.dataset.ccDone = 'fiber';
+      return;
+    }
+
+    sidebar.dataset.ccDone = 'dom';
     injectDOMSidebar(sidebar);
   });
 
@@ -160,13 +236,11 @@ function setupDOMInjection() {
 }
 
 function injectDOMSidebar(sidebar) {
-  // Header
   const header = document.createElement('div');
   header.className = 'cc-sidebar-header';
   header.textContent = 'CottonCord';
   sidebar.appendChild(header);
 
-  // Items
   TABS.forEach(tab => {
     const item = document.createElement('div');
     item.className = 'cc-sidebar-item' + (tab.id === _activeCCTab ? ' active' : '');
@@ -176,9 +250,12 @@ function injectDOMSidebar(sidebar) {
     sidebar.appendChild(item);
   });
 
-  // Prepare content mount (Discord's content area lives next to the sidebar)
-  const contentArea = sidebar.closest('[class*="standardSidebarView-"]')
-                   ?? sidebar.closest('[class*="contentRegion-"]')?.parentElement;
+  // Content area: look for the settings content region next to the sidebar
+  const contentArea =
+    sidebar.closest('[class*="standardSidebarView"]')
+    ?? sidebar.closest('[class*="contentRegion"]')?.parentElement
+    ?? sidebar.parentElement;
+
   if (contentArea) {
     _contentMount = document.createElement('div');
     _contentMount.className = 'cc-content-root';
@@ -217,7 +294,10 @@ function init() {
   try {
     injectStyles();
     const patched = patchGetPredicateSections();
-    if (!patched) setupDOMInjection();
+    if (!patched) {
+      console.log('[CottonCord] settingsPanel: webpack patch failed, starting fiber/DOM fallback');
+      setupDOMInjection();
+    }
   } catch (err) {
     console.error('[CottonCord] settingsPanel: init error:', err.message);
   }
